@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Presentación - Mi Portafolio">
@@ -9,16 +10,15 @@ import Layout from '../layouts/Layout.astro';
       
       <div class="presentation-content">
         <div class="profile-section">
-          <div class=<img src="/images/perfil.jpg" alt="Tu Nombre" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">>
-            <div class="image-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </div>
+          <div class="profile-image">
+            <img 
+              src={`${base}images/perfil.jpeg`}
+              alt="Foto de perfil" 
+              class="profile-photo"
+            />
           </div>
           <div class="profile-info">
-            <h2>Samuel Novoa Martínez</h2>
+            <h2>Tu Nombre Completo</h2>
             <p class="role">Estudiante de Ingeniería de Sistemas</p>
             <p class="university">Universidad El Bosque</p>
           </div>
@@ -27,16 +27,47 @@ import Layout from '../layouts/Layout.astro';
         <div class="video-section">
           <h3>Video de Presentación</h3>
           <div class="video-container">
-            <!-- Opción 1: Video de YouTube embebido -->
-            <!-- <iframe 
-              src="https://youtube.com/shorts/uPYVo6JfWSw?si=ZpMdO_20g2_4nzDf" 
+            <iframe 
+              src="https://www.youtube.com/embed/uPYVo6JfWSw" 
               title="Video de Presentación"
               frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
               allowfullscreen>
-            </iframe> -->
-            
-            
+            </iframe>
+          </div>
+          
+          <div class="video-info">
+            <h4>En mi video respondo:</h4>
+            <ul>
+              <li>¿Cómo me gusta que me llamen?</li>
+              <li>Algo sobre mí (hobby, interés, música/deporte)</li>
+              <li>¿Por qué Bases de Datos 1 me ayudará profesionalmente?</li>
+              <li>"Este semestre quiero demostrar que..."</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="about-me">
+          <h3>Sobre Mí</h3>
+          <div class="about-content">
+            <p>
+              <strong>¿Cómo me gusta que me llamen?</strong><br>
+              [Escribe aquí tu nombre preferido]
+            </p>
+            <p>
+              <strong>Algo sobre mí:</strong><br>
+              [Comparte un hobby, interés, música o deporte que te represente]
+            </p>
+            <p>
+              <strong>¿Por qué Bases de Datos 1?</strong><br>
+              [Explica una razón concreta de por qué este curso te ayudará profesionalmente]
+            </p>
+            <p>
+              <strong>Este semestre quiero demostrar que...</strong><br>
+              [Completa esta frase con tu objetivo]
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -76,16 +107,22 @@ import Layout from '../layouts/Layout.astro';
     border: 1px solid var(--border);
   }
 
-  .profile-image .image-placeholder {
+  .profile-image {
+    flex-shrink: 0;
+  }
+
+  .profile-photo {
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: cover;
     border: 3px solid var(--border);
-    color: var(--accent);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .profile-photo:hover {
+    transform: scale(1.05);
+    border-color: var(--accent);
   }
 
   .profile-info h2 {
@@ -131,24 +168,7 @@ import Layout from '../layouts/Layout.astro';
     left: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .video-placeholder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-secondary);
-    gap: 1rem;
-  }
-
-  .video-placeholder svg {
-    opacity: 0.5;
+    border-radius: 8px;
   }
 
   .video-info {
