@@ -1,0 +1,155 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Portafolio profesional - Ingeniería de Sistemas" } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <a href={base} class="logo">Mi Portafolio</a>
+        <ul class="nav-links">
+          <li><a href={base}>Home</a></li>
+          <li><a href={`${base}presentacion`}>Presentación</a></li>
+          <li><a href={`${base}evidencias`}>Evidencias</a></li>
+          <li><a href={`${base}proyectos`}>Proyectos</a></li>
+          <li><a href="https://github.com/tu-usuario" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </nav>
+    
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 - Bases de Datos 1 - Universidad El Bosque</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --border: #333333;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Navbar */
+  .navbar {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+
+  .navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .logo:hover {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 500;
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 4rem;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-links {
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .container {
+      padding: 0 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,280 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Evidencias - Mi Portafolio">
+  <section class="evidencias">
+    <div class="container">
+      <h1 class="page-title">Evidencias del Curso</h1>
+      <p class="page-subtitle">
+        Bases de Datos 1 - Universidad El Bosque
+      </p>
+
+      <div class="evidencias-grid">
+        <!-- Modelado -->
+        <div class="categoria-card">
+          <div class="categoria-header">
+            <div class="icon">🗂️</div>
+            <h2>Modelado</h2>
+          </div>
+          <div class="categoria-content">
+            <p class="descripcion">
+              Diagramas de entidad-relación, modelos conceptuales y lógicos de bases de datos.
+            </p>
+            <div class="evidencias-list">
+              <div class="empty-state">
+                <p>📝 Próximamente se agregarán evidencias</p>
+              </div>
+              <!-- Aquí se agregarán las evidencias cuando las tengas -->
+              <!-- 
+              <div class="evidencia-item">
+                <h3>Nombre de la Evidencia</h3>
+                <p>Descripción breve</p>
+                <a href="#" class="btn-ver">Ver más</a>
+              </div>
+              -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Normalización -->
+        <div class="categoria-card">
+          <div class="categoria-header">
+            <div class="icon">⚙️</div>
+            <h2>Normalización</h2>
+          </div>
+          <div class="categoria-content">
+            <p class="descripcion">
+              Procesos de normalización de bases de datos (1FN, 2FN, 3FN, FNBC).
+            </p>
+            <div class="evidencias-list">
+              <div class="empty-state">
+                <p>📝 Próximamente se agregarán evidencias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SQL -->
+        <div class="categoria-card">
+          <div class="categoria-header">
+            <div class="icon">💾</div>
+            <h2>SQL</h2>
+          </div>
+          <div class="categoria-content">
+            <p class="descripcion">
+              Consultas, procedimientos almacenados, triggers y optimización de bases de datos.
+            </p>
+            <div class="evidencias-list">
+              <div class="empty-state">
+                <p>📝 Próximamente se agregarán evidencias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proyecto -->
+        <div class="categoria-card">
+          <div class="categoria-header">
+            <div class="icon">🚀</div>
+            <h2>Proyecto</h2>
+          </div>
+          <div class="categoria-content">
+            <p class="descripcion">
+              Proyecto final integrador aplicando todos los conceptos del curso.
+            </p>
+            <div class="evidencias-list">
+              <div class="empty-state">
+                <p>📝 Próximamente se agregarán evidencias</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>📚 Cómo usar esta sección</h3>
+        <p>
+          A medida que avances en el curso, podrás agregar tus trabajos, proyectos y 
+          aprendizajes en cada categoría. Cada evidencia puede incluir:
+        </p>
+        <ul>
+          <li>Descripción del trabajo realizado</li>
+          <li>Archivos descargables (PDFs, imágenes, código)</li>
+          <li>Enlaces a repositorios de GitHub</li>
+          <li>Reflexiones sobre lo aprendido</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .evidencias {
+    padding: 4rem 0;
+    min-height: calc(100vh - 200px);
+  }
+
+  .page-title {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+  }
+
+  .evidencias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .categoria-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .categoria-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+  }
+
+  .categoria-header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .categoria-header h2 {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  .categoria-content {
+    padding: 2rem;
+  }
+
+  .descripcion {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .evidencias-list {
+    min-height: 100px;
+  }
+
+  .empty-state {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  .empty-state p {
+    margin: 0;
+  }
+
+  /* Estilos para cuando agregues evidencias */
+  .evidencia-item {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .evidencia-item:hover {
+    border-color: var(--accent);
+  }
+
+  .evidencia-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .evidencia-item p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .btn-ver {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+  }
+
+  .btn-ver:hover {
+    background: var(--accent-hover);
+  }
+
+  .info-section {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .info-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+  }
+
+  .info-section p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .info-section ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+  }
+
+  .info-section li::before {
+    content: "→ ";
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .evidencias-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

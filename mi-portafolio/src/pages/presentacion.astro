@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Presentación - Mi Portafolio">
+  <section class="presentation">
+    <div class="container">
+      <h1 class="page-title">Presentación</h1>
+      
+      <div class="presentation-content">
+        <div class="profile-section">
+          <div class=<img src="/images/perfil.jpg" alt="Tu Nombre" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">>
+            <div class="image-placeholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+          <div class="profile-info">
+            <h2>Samuel Novoa Martínez</h2>
+            <p class="role">Estudiante de Ingeniería de Sistemas</p>
+            <p class="university">Universidad El Bosque</p>
+          </div>
+        </div>
+
+        <div class="video-section">
+          <h3>Video de Presentación</h3>
+          <div class="video-container">
+            <!-- Opción 1: Video de YouTube embebido -->
+            <!-- <iframe 
+              src="https://youtube.com/shorts/uPYVo6JfWSw?si=ZpMdO_20g2_4nzDf" 
+              title="Video de Presentación"
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe> -->
+            
+            
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .presentation {
+    padding: 4rem 0;
+    min-height: calc(100vh - 200px);
+  }
+
+  .page-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .presentation-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .profile-section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .profile-image .image-placeholder {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--border);
+    color: var(--accent);
+  }
+
+  .profile-info h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .role {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .university {
+    color: var(--text-secondary);
+  }
+
+  .video-section {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .video-section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    background: var(--bg-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    gap: 1rem;
+  }
+
+  .video-placeholder svg {
+    opacity: 0.5;
+  }
+
+  .video-info {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .video-info h4 {
+    margin-bottom: 1rem;
+    color: var(--accent);
+  }
+
+  .video-info ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .video-info li::before {
+    content: "✓ ";
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  .about-me {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .about-me h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .about-content p {
+    line-height: 1.6;
+  }
+
+  .about-content strong {
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .profile-section {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>
