@@ -77,14 +77,16 @@ const ejerciciosNormalizacion = [
           </div>
           <div class="categoria-content">
             <p class="descripcion">
-              Estructuras DDL y consultas transaccionales implementadas en sistemas gestores relacionales.
+              Estructuras complejas, CTEs y control de transacciones en sistemas gestores de bases de datos.
             </p>
             <div class="evidencias-list">
-              <div class="evidencia-item">
-                <h3>Scripts y Operaciones Relacionales</h3>
-                <p>Construcción de bases de datos, inserciones masivas de prueba y desarrollo de consultas complejas con uniones avanzadas.</p>
-                <span class="status-badge">Próximamente...</span>
-              </div>
+              <a href={`${base}sql-avanzado/`} class="evidencia-link-card">
+                <div class="evidencia-item interactive-item">
+                  <h3>Scripts y Operaciones Transaccionales</h3>
+                  <p>Caso de estudio: Diagnóstico avanzado y diseño de operaciones ACID mediante control de estado (SAVEPOINT/COMMIT).</p>
+                  <span class="status-badge active-badge">Ver Caso de Estudio →</span>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -111,6 +113,10 @@ const ejerciciosNormalizacion = [
   .evidencias-list { display: flex; flex-direction: column; gap: 1rem; }
   .evidencia-item { background: var(--bg-secondary); padding: 1.25rem; border-radius: 10px; border: 1px solid var(--border); }
   .evidencia-item h3 { font-size: 1.1rem; margin: 0 0 0.5rem 0; }
+  .evidencia-link-card { text-decoration: none; color: inherit; display: block; }
+  .interactive-item { transition: border-color 0.3s, transform 0.3s; cursor: pointer; }
+  .interactive-item:hover { border-color: var(--accent); transform: translateX(4px); }
+  .active-badge { background: var(--accent); color: white; border: none; padding: 0.35rem 0.85rem; }
   .evidencia-item p { color: var(--text-secondary); font-size: 0.88rem; margin: 0 0 1rem 0; line-height: 1.5; }
   .status-badge { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--accent); background: rgba(59, 130, 246, 0.1); padding: 0.25rem 0.75rem; border-radius: 50px; border: 1px solid rgba(59, 130, 246, 0.2); }
 </style>

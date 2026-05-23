@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Code } from 'astro:components';
+
+const base = import.meta.env.BASE_URL;
+
+const sqlDiagnostico = `-- ============================================================
+-- 3. CONSULTA DIAGNÓSTICA PREVIA (Análisis de impacto)
+-- ============================================================
+WITH variante AS (
+    SELECT excluded_department_id, min_years_service, recent_job_history_months
+    FROM t1_variants 
+    WHERE variant_id = 4
+),
+dept_stats AS (
+    SELECT department_id,
+           ROUND(AVG(salary), 2) AS dept_avg_salary,
+           MAX(salary)           AS dept_max_salary,
+           COUNT(*)              AS dept_employee_count
+    FROM t1_employees
+    WHERE department_id IS NOT NULL
+    GROUP BY department_id
+),
+diagnostico AS (
+    SELECT
+        e.employee_id, e.first_name, e.salary, e.department_id,
+        ds.dept_avg_salary,
+        ROUND((ds.dept_avg_salary - e.salary) / ds.dept_avg_salary * 100, 4) AS pct_gap_to_avg
+    FROM t1_employees e
+    JOIN dept_stats ds ON ds.department_id = e.department_id
+)
+SELECT * FROM diagnostico WHERE pct_gap_to_avg > 0;`;
+---
+
+<Layout title="SQL Avanzado y Control ACID - Mi Portafolio">
+  <section class="sql-case-study">
+    <div class="container">
+      <a href={`${base}evidencias/`} class="btn-volver">← Volver a Evidencias</a>
+
+      <header class="case-header">
+        <h1>Transacciones y SQL Avanzado: Control ACID</h1>
+        <p class="subtitle">Caso de estudio sobre la Variante 4 - Ajustes Salariales Controlados</p>
+      </header>
+
+      <div class="content-block context-block">
+        <h2>Contexto del Negocio</h2>
+        <p>
+          El requerimiento (Variante 4) exigía aplicar un ajuste salarial extraordinario de manera selectiva. 
+          Las reglas de negocio obligaban a excluir departamentos específicos, filtrar empleados con una antigüedad 
+          mínima sin movimientos recientes, y aplicar un aumento porcentual dinámico sin que el nuevo salario 
+          superara un tope del 119% frente al promedio de su área.
+        </p>
+      </div>
+
+      <div class="content-block">
+        <h2>Fase 1: El Diagnóstico Previo</h2>
+        <p>
+          Antes de afectar la base de datos, se estructuró una consulta diagnóstica utilizando <strong>Common Table Expressions (CTEs)</strong> 
+          para calcular en memoria los promedios departamentales y evaluar las brechas salariales de los candidatos.
+        </p>
+        
+        <div class="code-block-wrapper">
+          <button class="copy-btn">Copiar código</button>
+          <Code code={sqlDiagnostico} lang="sql" theme="github-dark" />
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Fase 2: La Transacción Segura (Diseño Arquitectónico)</h2>
+        <div class="teoria-box">
+          <p>
+            <em>Nota técnica: Debido a las estrictas limitaciones de tiempo durante la prueba cronometrada, la ejecución física de esta fase no se incluyó en el script final. No obstante, el diseño arquitectónico transaccional se planificó de la siguiente manera:</em>
+          </p>
+          <p>
+            Se definió el uso de un <strong>SAVEPOINT</strong> (ej. <code>SAVEPOINT sv_before_adjustment;</code>) antes del <code>UPDATE</code> masivo. 
+            Si un ajuste rompía la regla de negocio y superaba el tope permitido frente al promedio departamental, el sistema atraparía la excepción y lanzaría un <code>ROLLBACK TO sv_before_adjustment;</code>. 
+            Esto permitiría deshacer únicamente el error lógico sin abortar toda la sesión ni destruir registros de auditoría previos, finalizando con un <code>COMMIT</code> una vez los datos fueran 100% seguros.
+          </p>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Sección de Teoría: Cumplimiento de Propiedades ACID</h2>
+        <p>Análisis de cómo el motor de base de datos (Oracle) protege la información de este caso de estudio bajo los principios transaccionales:</p>
+        
+        <div class="acid-grid">
+          <div class="acid-card">
+            <div class="acid-letter">A</div>
+            <h3>Atomicidad</h3>
+            <p>Operación bajo el principio "All-or-Nothing". Si durante la actualización o inserción de auditoría ocurre un error, el <code>ROLLBACK</code> general garantiza que la base no quede en un estado intermedio, previniendo salarios modificados sin rastro de auditoría.</p>
+          </div>
+          
+          <div class="acid-card">
+            <div class="acid-letter">C</div>
+            <h3>Consistencia</h3>
+            <p>La base pasa de un estado válido a otro. La lógica asegura que ningún salario actualizado vulnere la regla del 119% del promedio departamental. Las validaciones matemáticas en el script protegen la integridad de negocio impidiendo data corrupta.</p>
+          </div>
+          
+          <div class="acid-card">
+            <div class="acid-letter">I</div>
+            <h3>Aislamiento</h3>
+            <p>Bajo el nivel <code>READ COMMITTED</code>, mientras esta sesión no confirme la transacción, ninguna sesión concurrente verá los nuevos salarios (letras sucias). Las otras sesiones leen los valores originales mediante el mecanismo UNDO/MVCC.</p>
+          </div>
+          
+          <div class="acid-card">
+            <div class="acid-letter">D</div>
+            <h3>Durabilidad</h3>
+            <p>Una vez ejecutado el <code>COMMIT</code>, el motor escribe los cambios en el <em>redo log</em>. Ante un fallo eléctrico o de instancia posterior al commit, el proceso de <em>crash recovery</em> reaplicará los cambios garantizando la persistencia total en disco.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Lógica para que el botón de copiar funcione en la web
+  document.addEventListener('DOMContentLoaded', () => {
+    const blocks = document.querySelectorAll('.code-block-wrapper');
+    blocks.forEach(wrapper => {
+      const button = wrapper.querySelector('.copy-btn');
+      const code = wrapper.querySelector('code');
+      if (button && code) {
+        button.addEventListener('click', async () => {
+          await navigator.clipboard.writeText(code.innerText);
+          button.textContent = '¡Copiado!';
+          button.style.background = 'rgba(16, 185, 129, 0.2)'; // Verde éxito
+          setTimeout(() => {
+            button.textContent = 'Copiar código';
+            button.style.background = 'rgba(255, 255, 255, 0.1)';
+          }, 2000);
+        });
+      }
+    });
+  });
+</script>
+
+<style is:global>
+  /* Fix para que el fondo del componente Code de Astro abarque todo el ancho */
+  .code-block-wrapper pre.astro-code {
+    padding: 1.5rem;
+    margin: 0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    overflow-x: auto;
+  }
+</style>
+
+<style>
+  .sql-case-study { padding: 4rem 0; }
+  .btn-volver {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: transform 0.2s;
+  }
+  .btn-volver:hover { transform: translateX(-4px); }
+  
+  .case-header { text-align: center; margin-bottom: 4rem; }
+  .case-header h1 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--text-primary); }
+  .subtitle { font-size: 1.25rem; color: var(--text-secondary); }
+
+  .content-block { margin-bottom: 4rem; }
+  .content-block h2 { 
+    font-size: 1.8rem; 
+    color: var(--accent); 
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  .content-block p { color: var(--text-secondary); line-height: 1.7; font-size: 1.05rem; margin-bottom: 1rem; }
+
+  .context-block {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .code-block-wrapper {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+  }
+  .copy-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+  .teoria-box {
+    background: rgba(59, 130, 246, 0.05);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem;
+    border-radius: 0 8px 8px 0;
+  }
+  .teoria-box em { color: var(--text-primary); display: block; margin-bottom: 1rem; }
+
+  /* Grid ACID */
+  .acid-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .acid-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .acid-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+  .acid-letter {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: var(--bg-secondary);
+    -webkit-text-stroke: 1px var(--accent);
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    opacity: 0.3;
+    z-index: 0;
+  }
+  .acid-card h3 {
+    position: relative;
+    z-index: 1;
+    color: var(--text-primary);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+  }
+  .acid-card p {
+    position: relative;
+    z-index: 1;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+</style>
