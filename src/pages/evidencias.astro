@@ -1,98 +1,68 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
+
+// Listado de los ejercicios basados en tu documento de ModelosER
+const ejerciciosModelado = [
+  { slug: 'residuos-toxicos', titulo: 'Modelos Residuos Tóxicos' },
+  { slug: 'taller-reparacion', titulo: 'Modelos Taller de Reparación' },
+  { slug: 'gestion-pedidos', titulo: 'Modelos Gestión de Pedidos' },
+  { slug: 'lineas-metro', titulo: 'Modelos Líneas de Metro' },
+  { slug: 'biblioteca', titulo: 'Modelos Sistema de Biblioteca' },
+  { slug: 'campeonato-futbol', titulo: 'Modelos Campeonato de Fútbol' },
+  { slug: 'gestion-vuelos', titulo: 'Modelos Gestión de Vuelos' },
+  { slug: 'empresa-ingenieria-inversa', titulo: 'Modelos Empresa (Ingeniería Inversa)' }
+];
 ---
 
 <Layout title="Evidencias - Mi Portafolio">
   <section class="evidencias">
     <div class="container">
       <h1 class="page-title">Evidencias del Curso</h1>
-      <p class="page-subtitle">
-        Bases de Datos 1 - Universidad El Bosque
-      </p>
+      <p class="page-subtitle">Bases de Datos 1 - Universidad El Bosque</p>
 
       <div class="evidencias-grid">
-        <!-- Modelado -->
-        <div class="categoria-card">
+        <div class="categoria-card animation-card">
           <div class="categoria-header">
             <div class="icon">🗂️</div>
-            <h2>Modelado</h2>
+            <h2>Modelado de Datos</h2>
           </div>
           <div class="categoria-content">
             <p class="descripcion">
-              Diagramas de entidad-relación, modelos conceptuales y lógicos de bases de datos.
+              Explora los esquemas conceptuales y lógicos de los casos de estudio analizados en clase. Pasa el cursor sobre cada uno para ver los detalles.
             </p>
-            <div class="evidencias-list">
-              <div class="empty-state">
-                <p>📝 Próximamente se agregarán evidencias</p>
-              </div>
-              <!-- Aquí se agregarán las evidencias cuando las tengas -->
-              <!-- 
-              <div class="evidencia-item">
-                <h3>Nombre de la Evidencia</h3>
-                <p>Descripción breve</p>
-                <a href="#" class="btn-ver">Ver más</a>
-              </div>
-              -->
-            </div>
+            <nav class="ejercicios-links">
+              {ejerciciosModelado.map((ejercicio) => (
+                <a href={`${base}modelado/${ejercicio.slug}/`} class="ejercicio-link">
+                  <span class="link-bullet">➔</span> {ejercicio.titulo}
+                </a>
+              ))}
+            </nav>
           </div>
         </div>
 
-        <!-- Normalización -->
         <div class="categoria-card">
           <div class="categoria-header">
             <div class="icon">⚙️</div>
-            <h2>Normalización</h2>
+            <h2>Normalización y Álgebra</h2>
           </div>
           <div class="categoria-content">
             <p class="descripcion">
-              Procesos de normalización de bases de datos (1FN, 2FN, 3FN, FNBC).
+              Optimización de estructuras de datos mediante reglas de transformación formal.
             </p>
             <div class="evidencias-list">
-              <div class="empty-state">
-                <p>📝 Próximamente se agregarán evidencias</p>
+              <div class="evidencia-item">
+                <h3>Casos Prácticos de 1FN, 2FN y 3FN</h3>
+                <p>Descomposición formal de tablas para mitigar anomalías de redundancia e integridad.</p>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SQL -->
-        <div class="categoria-card">
-          <div class="categoria-header">
-            <div class="icon">💾</div>
-            <h2>SQL</h2>
-          </div>
-          <div class="categoria-content">
-            <p class="descripcion">
-              Consultas, procedimientos almacenados, triggers y optimización de bases de datos.
-            </p>
-            <div class="evidencias-list">
-              <div class="empty-state">
-                <p>📝 Próximamente se agregarán evidencias</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Proyecto -->
-        <div class="categoria-card">
-          <div class="categoria-header">
-            <div class="icon">🚀</div>
-            <h2>Proyecto</h2>
-          </div>
-          <div class="categoria-content">
-            <p class="descripcion">
-              Proyecto final integrador aplicando todos los conceptos del curso.
-            </p>
-            <div class="evidencias-list">
-              <div class="empty-state">
-                <p>📝 Próximamente se agregarán evidencias</p>
+              <div class="evidencia-item">
+                <h3>Optimización Algebraica</h3>
+                <p>Diseño de consultas eficientes utilizando selecciones y proyecciones tempranas.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </section>
 </Layout>
@@ -100,169 +70,105 @@ import Layout from '../layouts/Layout.astro';
 <style>
   .evidencias {
     padding: 4rem 0;
-    min-height: calc(100vh - 200px);
   }
-
   .page-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
     text-align: center;
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
-
   .page-subtitle {
-    text-align: center;
-    color: var(--text-secondary);
     font-size: 1.2rem;
+    color: var(--text-secondary);
+    text-align: center;
     margin-bottom: 3rem;
   }
-
   .evidencias-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2.5rem;
   }
-
   .categoria-card {
     background: var(--bg-card);
-    border-radius: 12px;
     border: 1px solid var(--border);
-    overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
-
-  .categoria-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent);
-  }
-
   .categoria-header {
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
-    padding: 2rem;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
   }
-
-  .icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-
   .categoria-header h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin: 0;
+    color: var(--text-primary);
   }
-
-  .categoria-content {
-    padding: 2rem;
+  .icon {
+    font-size: 2rem;
   }
-
   .descripcion {
     color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+  }
+  
+  /* Contenedor de enlaces con efecto Hover solicitado */
+  .ejercicios-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ejercicio-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1.05rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    transition: all 0.25s ease-in-out;
+    border-left: 3px solid transparent;
+  }
+  /* Efecto visual al pasar el cursor por el enlace */
+  .ejercicio-link:hover {
+    color: var(--accent);
+    background: rgba(59, 130, 246, 0.05);
+    border-left-color: var(--accent);
+    transform: translateX(6px);
+  }
+  .link-bullet {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .ejercicio-link:hover .link-bullet {
+    opacity: 1;
   }
 
   .evidencias-list {
-    min-height: 100px;
-  }
-
-  .empty-state {
-    background: var(--bg-secondary);
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-    color: var(--text-secondary);
-  }
-
-  .empty-state p {
-    margin: 0;
-  }
-
-  /* Estilos para cuando agregues evidencias */
-  .evidencia-item {
-    background: var(--bg-secondary);
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    border: 1px solid var(--border);
-    transition: border-color 0.3s;
-  }
-
-  .evidencia-item:hover {
-    border-color: var(--accent);
-  }
-
-  .evidencia-item h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .evidencia-item p {
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-  }
-
-  .btn-ver {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: var(--accent);
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    transition: background 0.3s;
-  }
-
-  .btn-ver:hover {
-    background: var(--accent-hover);
-  }
-
-  .info-section {
-    background: var(--bg-card);
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-  }
-
-  .info-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--accent);
-  }
-
-  .info-section p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .info-section ul {
-    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
+  }
+  .evidencia-item {
+    background: var(--bg-secondary);
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .evidencia-item h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem 0;
+  }
+  .evidencia-item p {
     color: var(--text-secondary);
-  }
-
-  .info-section li::before {
-    content: "→ ";
-    color: var(--accent);
-    font-weight: bold;
-    margin-right: 0.5rem;
-  }
-
-  @media (max-width: 768px) {
-    .page-title {
-      font-size: 2rem;
-    }
-
-    .evidencias-grid {
-      grid-template-columns: 1fr;
-    }
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.5;
   }
 </style>

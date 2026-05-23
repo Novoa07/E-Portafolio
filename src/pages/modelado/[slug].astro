@@ -1,0 +1,251 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
+
+// Define los paths estáticos para los 8 escenarios basados en ModelosER.md
+export function getStaticPaths() {
+  return [
+    { 
+      params: { slug: 'residuos-toxicos' }, 
+      props: { 
+        titulo: 'Modelos Residuos Tóxicos',
+        contexto: 'Gestión y control ambiental de residuos peligrosos desde las empresas productoras hasta los centros de tratamiento y depósitos de seguridad.',
+        detalles: 'Contempla entidades como Empresa Productora, Residuo, Constituyente Químico, Traslado, Transportadora y Destino con sus respectivas restricciones de empaque y volumen.'
+      }
+    },
+    { 
+      params: { slug: 'taller-reparacion' }, 
+      props: { 
+        titulo: 'Modelos Taller de Reparación',
+        contexto: 'Sistema de control para el estacionamiento y mantenimiento técnico de vehículos dentro de un taller especializado.',
+        detalles: 'Gestión interna que vincula autos, mecánicos asignados, repuestos utilizados en las reparaciones y horas de servicio invertidas.'
+      }
+    },
+    { 
+      params: { slug: 'gestion-pedidos' }, 
+      props: { 
+        titulo: 'Modelos Gestión de Pedidos',
+        contexto: 'Arquitectura relacional enfocada en el flujo logístico de solicitudes, despachos y distribución de productos de consumo.',
+        detalles: 'Define interacciones entre clientes, artículos en stock, repartidores calificados y promociones aplicadas cronológicamente.'
+      }
+    },
+    { 
+      params: { slug: 'lineas-metro' }, 
+      props: { 
+        titulo: 'Modelos Líneas de Metro',
+        contexto: 'Modelado de redes de transporte masivo urbano para optimizar tiempos de trayecto y distribución de estaciones.',
+        detalles: 'Organiza la correspondencia entre líneas de tránsito, estaciones físicas, trenes asignados y accesos peatonales controlados.'
+      }
+    },
+    { 
+      params: { slug: 'biblioteca' }, 
+      props: { 
+        titulo: 'Modelos Sistema de Biblioteca',
+        contexto: 'Administración de préstamos, inventario de volúmenes bibliográficos y control de usuarios activos.',
+        detalles: 'Involucra catálogos de libros, autores, ejemplares físicos disponibles, procesos de reserva y penalizaciones por mora.'
+      }
+    },
+    { 
+      params: { slug: 'campeonato-futbol' }, 
+      props: { 
+        titulo: 'Modelos Campeonato de Fútbol',
+        contexto: 'Estructuración del historial deportivo, encuentros reglamentarios y estadísticas de desempeño de una liga local.',
+        detalles: 'Vincula equipos, jugadores registrados, estadios de juego, cuerpo arbitral y actas de partidos detalladas.'
+      }
+    },
+    { 
+      params: { slug: 'gestion-vuelos' }, 
+      props: { 
+        titulo: 'Modelos Gestión de Vuelos',
+        contexto: 'Sistema transaccional para aerolíneas comerciales enfocado en la asignación de rutas y operaciones aéreas.',
+        detalles: 'Control preciso sobre aeronaves de la flota, rutas de vuelo programadas, tripulación de cabina asignada y pasajeros.'
+      }
+    },
+    { 
+      params: { slug: 'empresa-ingenieria-inversa' }, 
+      props: { 
+        titulo: 'Modelos Empresa (Ingeniería Inversa)',
+        contexto: 'Reconstrucción analítica de un esquema de base de datos existente mediante notación formal de Peter Chen.',
+        detalles: 'Mapeo detallado de la estructura de recursos humanos corporativos, incluyendo supervisores, departamentos asignados, proyectos locales y familiares dependientes.'
+      }
+    }
+  ];
+}
+
+const { slug } = Astro.params;
+const { titulo, contexto, detalles } = Astro.props;
+---
+
+<Layout title={`${titulo} - Detalles`}>
+  <section class="detalle-modelo">
+    <div class="container">
+      <a href={`${base}evidencias/`} class="btn-volver">← Volver a Evidencias</a>
+
+      <header class="modelo-header">
+        <h1>{titulo}</h1>
+        <p class="contexto-principal">{contexto}</p>
+      </header>
+
+      <div class="info-block">
+        <h2>Contexto Técnico General</h2>
+        <p>{detalles}</p>
+      </div>
+
+      <div class="visuales-grid">
+        <div class="diagrama-card">
+          <div class="card-header">
+            <h3>1. Modelo Entidad-Relación (MER / MEER)</h3>
+          </div>
+          <div class="card-body">
+            <div class="image-wrapper">
+              <img 
+                src={`${base}images/modelos/${slug}-er.png`} 
+                alt={`Diagrama Entidad Relación de ${titulo}`}
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              />
+              <div class="placeholder-fallback">
+                <span class="placeholder-icon">📐</span>
+                <p>Diagrama conceptual en proceso de renderizado o carga</p>
+                <small>Ubicación esperada: public/images/modelos/{slug}-er.png</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="diagrama-card">
+          <div class="card-header">
+            <h3>2. Modelo Relacional (Tablas y Llaves)</h3>
+          </div>
+          <div class="card-body">
+            <div class="image-wrapper">
+              <img 
+                src={`${base}images/modelos/${slug}-relacional.png`} 
+                alt={`Modelo Relacional de ${titulo}`}
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              />
+              <div class="placeholder-fallback">
+                <span class="placeholder-icon">📊</span>
+                <p>Esquema lógico relacional en proceso de renderizado o carga</p>
+                <small>Ubicación esperada: public/images/modelos/{slug}-relacional.png</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .detalle-modelo {
+    padding: 3rem 0;
+  }
+  .btn-volver {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: transform 0.2s;
+  }
+  .btn-volver:hover {
+    transform: translateX(-4px);
+  }
+  .modelo-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  .contexto-principal {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+  }
+  .info-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+  }
+  .info-block h2 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--accent);
+  }
+  .info-block p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  /* Grid de Imágenes */
+  .visuales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 2.5rem;
+  }
+  .diagrama-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--bg-secondary);
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-header h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+  }
+  .card-body {
+    padding: 1.5rem;
+  }
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 350px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px dashed var(--border);
+  }
+  .image-wrapper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  /* Fallback elegante si la imagen aún no se encuentra físicamente */
+  .placeholder-fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+  .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+  .placeholder-fallback p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .placeholder-fallback small {
+    font-family: monospace;
+    font-size: 0.8rem;
+    opacity: 0.5;
+  }
+</style>
