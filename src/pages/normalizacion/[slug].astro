@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Se importa la data generada que pusiste en src/data/
+import datosNormalizacion from '../../data/datos-normalizacion.json';
+
+const base = import.meta.env.BASE_URL;
+
+// Esta función lee el JSON y crea automáticamente las 7 páginas
+export function getStaticPaths() {
+  return datosNormalizacion.map((ejercicio) => ({
+    params: { slug: ejercicio.slug },
+    props: { 
+      titulo: ejercicio.titulo,
+      html_content: ejercicio.html_content
+    }
+  }));
+}
+
+const { titulo, html_content } = Astro.props;
+---
+
+<Layout title={`${titulo} - Detalles de Normalización`}>
+  <section class="detalle-modelo">
+    <div class="container">
+      <a href={`${base}evidencias/`} class="btn-volver">← Volver a Evidencias</a>
+
+      <header class="modelo-header">
+        <h1>{titulo}</h1>
+      </header>
+
+      <div class="info-block normalizacion-content">
+        <Fragment set:html={html_content} />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  /* Estos estilos se aplican al contenido inyectado, diseñando las tablas como pediste */
+  .normalizacion-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+  }
+  
+  .normalizacion-content h2, .normalizacion-content h3 {
+    color: var(--accent);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
+  }
+
+  .norm-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  .norm-table th {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 1rem;
+    border-bottom: 2px solid var(--accent);
+    white-space: nowrap;
+  }
+
+  .norm-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .norm-table tr:hover td {
+    background: rgba(59, 130, 246, 0.05);
+    color: var(--accent);
+  }
+</style>
+
+<style>
+  .detalle-modelo {
+    padding: 3rem 0;
+  }
+  .btn-volver {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: transform 0.2s;
+  }
+  .btn-volver:hover {
+    transform: translateX(-4px);
+  }
+  .modelo-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+  }
+  .info-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+  }
+</style>

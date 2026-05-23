@@ -12,6 +12,17 @@ const ejerciciosModelado = [
   { slug: 'gestion-vuelos', titulo: 'Modelos Comidas a Domicilio (Eat\'n Go)' },
   { slug: 'empresa-ingenieria-inversa', titulo: 'Modelos Empresa (Ingeniería Inversa)' }
 ];
+
+// Nueva lista dinámica para los casos de Normalización
+const ejerciciosNormalizacion = [
+  { slug: 'proyectos-empleados', titulo: 'Tabla 1: Proyectos y Empleados' },
+  { slug: 'estudiantes-1fn-3fn', titulo: 'Tabla Estudiantes: 1FN a 3FN' },
+  { slug: 'member-dinner', titulo: 'Tabla 3: Member Dinner' },
+  { slug: 'visitas-medicas', titulo: 'Tabla 2: Visitas Médicas' },
+  { slug: 'rentals-netflix', titulo: 'Tabla 4: Rentals Netflix (3FN y BCNF)' },
+  { slug: 'logistic-systems', titulo: 'Avanzada 1: Sistema de Envío' },
+  { slug: 'stream-and-go', titulo: 'Avanzada 2: Video Club' }
+];
 ---
 
 <Layout title="Evidencias - Mi Portafolio">
@@ -47,15 +58,15 @@ const ejerciciosModelado = [
           </div>
           <div class="categoria-content">
             <p class="descripcion">
-              Transformación formal de esquemas lógicos para eliminar redundancias y anomalías operacionales.
+              Transformación formal de esquemas lógicos para eliminar redundancias y anomalías operacionales. Selecciona un caso:
             </p>
-            <div class="evidencias-list">
-              <div class="evidencia-item">
-                <h3>Casos Prácticos de 1FN, 2FN y 3FN</h3>
-                <p>Análisis y descomposición de tablas mediante dependencias funcionales para garantizar la integridad referencial.</p>
-                <span class="status-badge">Documentado</span>
-              </div>
-            </div>
+            <nav class="ejercicios-links">
+              {ejerciciosNormalizacion.map((ejercicio) => (
+                <a href={`${base}normalizacion/${ejercicio.slug}/`} class="ejercicio-link">
+                  <span class="link-bullet">➔</span> {ejercicio.titulo}
+                </a>
+              ))}
+            </nav>
           </div>
         </div>
 
@@ -72,7 +83,7 @@ const ejerciciosModelado = [
               <div class="evidencia-item">
                 <h3>Scripts y Operaciones Relacionales</h3>
                 <p>Construcción de bases de datos, inserciones masivas de prueba y desarrollo de consultas complejas con uniones avanzadas.</p>
-                <span class="status-badge">Implementado</span>
+                <span class="status-badge">Próximamente...</span>
               </div>
             </div>
           </div>
@@ -83,115 +94,23 @@ const ejerciciosModelado = [
 </Layout>
 
 <style>
-  .evidencias {
-    padding: 4rem 0;
-  }
-  .page-title {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-  .page-subtitle {
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  .evidencias-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2rem;
-  }
-  .categoria-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-  .categoria-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.75rem;
-  }
-  .categoria-header h2 {
-    font-size: 1.45rem;
-    margin: 0;
-    color: var(--text-primary);
-  }
-  .icon {
-    font-size: 1.8rem;
-  }
-  .descripcion {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-  .ejercicios-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .ejercicio-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.95rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
-    transition: all 0.2s ease-in-out;
-    border-left: 3px solid transparent;
-  }
-  .ejercicio-link:hover {
-    color: var(--accent);
-    background: rgba(59, 130, 246, 0.05);
-    border-left-color: var(--accent);
-    transform: translateX(4px);
-  }
-  .link-bullet {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-  .ejercicio-link:hover .link-bullet {
-    opacity: 1;
-  }
-  .evidencias-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .evidencia-item {
-    background: var(--bg-secondary);
-    padding: 1.25rem;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-  }
-  .evidencia-item h3 {
-    font-size: 1.1rem;
-    margin: 0 0 0.5rem 0;
-  }
-  .evidencia-item p {
-    color: var(--text-secondary);
-    font-size: 0.88rem;
-    margin: 0 0 1rem 0;
-    line-height: 1.5;
-  }
-  .status-badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--accent);
-    background: rgba(59, 130, 246, 0.1);
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-  }
+  .evidencias { padding: 4rem 0; }
+  .page-title { font-size: 2.5rem; margin-bottom: 0.5rem; text-align: center; }
+  .page-subtitle { font-size: 1.2rem; color: var(--text-secondary); text-align: center; margin-bottom: 3rem; }
+  .evidencias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
+  .categoria-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; display: flex; flex-direction: column; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+  .categoria-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+  .categoria-header h2 { font-size: 1.45rem; margin: 0; color: var(--text-primary); }
+  .icon { font-size: 1.8rem; }
+  .descripcion { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.5; }
+  .ejercicios-links { display: flex; flex-direction: column; gap: 0.5rem; }
+  .ejercicio-link { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; padding: 0.5rem 0.75rem; border-radius: 8px; transition: all 0.2s ease-in-out; border-left: 3px solid transparent; }
+  .ejercicio-link:hover { color: var(--accent); background: rgba(59, 130, 246, 0.05); border-left-color: var(--accent); transform: translateX(4px); }
+  .link-bullet { opacity: 0; transition: opacity 0.2s ease; }
+  .ejercicio-link:hover .link-bullet { opacity: 1; }
+  .evidencias-list { display: flex; flex-direction: column; gap: 1rem; }
+  .evidencia-item { background: var(--bg-secondary); padding: 1.25rem; border-radius: 10px; border: 1px solid var(--border); }
+  .evidencia-item h3 { font-size: 1.1rem; margin: 0 0 0.5rem 0; }
+  .evidencia-item p { color: var(--text-secondary); font-size: 0.88rem; margin: 0 0 1rem 0; line-height: 1.5; }
+  .status-badge { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--accent); background: rgba(59, 130, 246, 0.1); padding: 0.25rem 0.75rem; border-radius: 50px; border: 1px solid rgba(59, 130, 246, 0.2); }
 </style>
