@@ -2,15 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL;
 
-// Listado de los ejercicios basados en tu documento de ModelosER
 const ejerciciosModelado = [
   { slug: 'residuos-toxicos', titulo: 'Modelos Residuos Tóxicos' },
   { slug: 'taller-reparacion', titulo: 'Modelos Taller de Reparación' },
   { slug: 'gestion-pedidos', titulo: 'Modelos Gestión de Pedidos' },
   { slug: 'lineas-metro', titulo: 'Modelos Líneas de Metro' },
   { slug: 'biblioteca', titulo: 'Modelos Sistema de Biblioteca' },
-  { slug: 'campeonato-futbol', titulo: 'Modelos Campeonato de Fútbol' },
-  { slug: 'gestion-vuelos', titulo: 'Modelos Gestión de Vuelos' },
+  { slug: 'campeonato-futbol', titulo: 'Modelos Empresa de Transportes' },
+  { slug: 'gestion-vuelos', titulo: 'Modelos Comidas a Domicilio (Eat\'n Go)' },
   { slug: 'empresa-ingenieria-inversa', titulo: 'Modelos Empresa (Ingeniería Inversa)' }
 ];
 ---
@@ -22,14 +21,14 @@ const ejerciciosModelado = [
       <p class="page-subtitle">Bases de Datos 1 - Universidad El Bosque</p>
 
       <div class="evidencias-grid">
-        <div class="categoria-card animation-card">
+        <div class="categoria-card">
           <div class="categoria-header">
             <div class="icon">🗂️</div>
             <h2>Modelado de Datos</h2>
           </div>
           <div class="categoria-content">
             <p class="descripcion">
-              Explora los esquemas conceptuales y lógicos de los casos de estudio analizados en clase. Pasa el cursor sobre cada uno para ver los detalles.
+              Diseño conceptual y lógico de diagramas entidad-relación avanzados y relacionales.
             </p>
             <nav class="ejercicios-links">
               {ejerciciosModelado.map((ejercicio) => (
@@ -44,20 +43,36 @@ const ejerciciosModelado = [
         <div class="categoria-card">
           <div class="categoria-header">
             <div class="icon">⚙️</div>
-            <h2>Normalización y Álgebra</h2>
+            <h2>Normalización</h2>
           </div>
           <div class="categoria-content">
             <p class="descripcion">
-              Optimización de estructuras de datos mediante reglas de transformación formal.
+              Transformación formal de esquemas lógicos para eliminar redundancias y anomalías operacionales.
             </p>
             <div class="evidencias-list">
               <div class="evidencia-item">
                 <h3>Casos Prácticos de 1FN, 2FN y 3FN</h3>
-                <p>Descomposición formal de tablas para mitigar anomalías de redundancia e integridad.</p>
+                <p>Análisis y descomposición de tablas mediante dependencias funcionales para garantizar la integridad referencial.</p>
+                <span class="status-badge">Documentado</span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="categoria-card">
+          <div class="categoria-header">
+            <div class="icon">💻</div>
+            <h2>Consultas SQL</h2>
+          </div>
+          <div class="categoria-content">
+            <p class="descripcion">
+              Estructuras DDL y consultas transaccionales implementadas en sistemas gestores relacionales.
+            </p>
+            <div class="evidencias-list">
               <div class="evidencia-item">
-                <h3>Optimización Algebraica</h3>
-                <p>Diseño de consultas eficientes utilizando selecciones y proyecciones tempranas.</p>
+                <h3>Scripts y Operaciones Relacionales</h3>
+                <p>Construcción de bases de datos, inserciones masivas de prueba y desarrollo de consultas complejas con uniones avanzadas.</p>
+                <span class="status-badge">Implementado</span>
               </div>
             </div>
           </div>
@@ -84,63 +99,62 @@ const ejerciciosModelado = [
   }
   .evidencias-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
   }
   .categoria-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 2.5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
   .categoria-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     border-bottom: 1px solid var(--border);
-    padding-bottom: 1rem;
+    padding-bottom: 0.75rem;
   }
   .categoria-header h2 {
-    font-size: 1.6rem;
+    font-size: 1.45rem;
     margin: 0;
     color: var(--text-primary);
   }
   .icon {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   .descripcion {
     color: var(--text-secondary);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-size: 0.95rem;
-    line-height: 1.6;
+    line-height: 1.5;
   }
-  
-  /* Contenedor de enlaces con efecto Hover solicitado */
   .ejercicios-links {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
   .ejercicio-link {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     color: var(--text-secondary);
     text-decoration: none;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     padding: 0.5rem 0.75rem;
     border-radius: 8px;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.2s ease-in-out;
     border-left: 3px solid transparent;
   }
-  /* Efecto visual al pasar el cursor por el enlace */
   .ejercicio-link:hover {
     color: var(--accent);
     background: rgba(59, 130, 246, 0.05);
     border-left-color: var(--accent);
-    transform: translateX(6px);
+    transform: translateX(4px);
   }
   .link-bullet {
     opacity: 0;
@@ -149,7 +163,6 @@ const ejerciciosModelado = [
   .ejercicio-link:hover .link-bullet {
     opacity: 1;
   }
-
   .evidencias-list {
     display: flex;
     flex-direction: column;
@@ -158,7 +171,7 @@ const ejerciciosModelado = [
   .evidencia-item {
     background: var(--bg-secondary);
     padding: 1.25rem;
-    border-radius: 8px;
+    border-radius: 10px;
     border: 1px solid var(--border);
   }
   .evidencia-item h3 {
@@ -167,8 +180,18 @@ const ejerciciosModelado = [
   }
   .evidencia-item p {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin: 0;
+    font-size: 0.88rem;
+    margin: 0 0 1rem 0;
     line-height: 1.5;
+  }
+  .status-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(59, 130, 246, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
   }
 </style>
